@@ -42,8 +42,7 @@ class IngressTest {
             assertThat(ingress.getNode("spec", "rules").required(0).path("http").path("paths").required(0).path("path"))
                     .hasTextContaining("/mypath");
 
-            assertThat(ingress.getMetadata().path("annotations"))
-                    .isObject(Map.of("kubernetes.io/ingress.class", "nginx"));
+            assertThat(ingress.getNode("spec", "ingressClassName")).hasTextContaining("nginx");
         }
     }
 
@@ -57,8 +56,7 @@ class IngressTest {
         final var ingresses = resources.getAll(Kind.Ingress);
 
         for (KubeResource ingress : ingresses) {
-            assertThat(ingress.getMetadata().path("annotations"))
-                    .isObject(Map.of("kubernetes.io/ingress.class", "my-custom-nginx"));
+            assertThat(ingress.getNode("spec", "ingressClassName")).hasTextContaining("my-custom-nginx");
         }
     }
 
