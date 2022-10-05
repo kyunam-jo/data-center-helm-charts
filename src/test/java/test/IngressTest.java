@@ -54,7 +54,7 @@ class IngressTest {
         final var ingresses = resources.getAll(Kind.Ingress);
 
         for (KubeResource ingress : ingresses) {
-            assertThat(ingress.getNode("spec", "ingressClassName")).hasTextContaining("my-custom-nginx");
+            assertThat(ingress.getNode("spec", "ingressClassName").hasTextContaining("my-custom-nginx"));
         }
     }
 
